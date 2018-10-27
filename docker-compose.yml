@@ -1,5 +1,6 @@
 web:
    image: nginx:latest
+   restart: always
    container_name: docker-nginx
    ports:
    - "80:80"
@@ -10,8 +11,9 @@ web:
    - php
    - mysql
 php:
-   image: php:7-fpm
+   build: ./php-fpm
    container_name: docker-php
+   restart: always
    ports:
    - "9000:9000"
    volumes:
@@ -19,8 +21,9 @@ php:
    links:
    - mysql
 mysql:
-   image: mysql:latest
+   image: mysql:5.7
    container_name: mysql
+   restart: always
    ports:
    - "3306:3306"
    environment:
@@ -28,6 +31,7 @@ mysql:
 phpmyadmin:
    image: phpmyadmin/phpmyadmin
    container_name: phpmyadmin
+   restart: always
    ports:
    - "8080:80"
    links:
