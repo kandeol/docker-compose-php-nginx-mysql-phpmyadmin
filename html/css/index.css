@@ -1,0 +1,26 @@
+body
+{
+  background-color: orange;
+  width: 99%;
+}
+
+header
+{
+  border: 1px solid #171918;
+  text-shadow: 3px 2px white;
+  height: 170px;
+  background-color: #f8b173;
+}
+header .title
+{
+  text-align: center;
+  font-size: 45px;
+}
+main
+{
+  border: 1px solid #a01919;
+  background-color:  #f8b173;
+  height: 200px;
+  margin-top: 15px;
+  text-align: center;
+}
