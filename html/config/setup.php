@@ -30,7 +30,17 @@ function setup($db, $db_name)
     ID_IMG int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
     PATH_IMG varchar(255) NOT NULL,
     ID_USER int(11) NOT NULL,
-    FOREIGN KEY (id_user) REFERENCES login(id_user)
+    DATE_IMG DATETIME DEFAULT NOW(),
+    FOREIGN KEY (ID_USER) REFERENCES login(id_user)
+  )";
+  $result = $db->exec($sql);
+
+  $sql = "CREATE TABLE T_LIKES (
+    ID_LIKES int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    ID_IMG int(11) NOT NULL,
+    ID_USER int(11) NOT NULL,
+    FOREIGN KEY (ID_IMG) REFERENCES image(ID_IMG),
+    FOREIGN KEY (ID_USER) REFERENCES login(id_user)
   )";
   $result = $db->exec($sql);
 }

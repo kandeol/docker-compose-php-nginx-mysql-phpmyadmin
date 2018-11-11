@@ -37,12 +37,14 @@ footer
 }
 .side
 {
+  text-align: center;
   border: 1px solid black;
   position: absolute;
   height: 750px;
   top: 195px;
   right: 4px;
   background-color:  #f8b173;
+  overflow: auto;
 
 }
 .deco

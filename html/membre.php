@@ -27,11 +27,10 @@ if (!isset($_SESSION['user']))
      <h1 class="title"> CAMAGRU </h1>
      <div class="deco"><a href="deconnexion.php"> se deconnecter </a></div>
      <div class="profile"><a href="profile.php"> Profile</a></div>
+     <div id="gallery"><a href="gallery.php">Gallery</a></div>
    </header>
  <!-- Menu de navigation du site -->
  <main>
-
-
 
 <form method="POST" enctype="multipart/form-data">
  <input type="file" name="myimage">
@@ -48,22 +47,21 @@ if (isset($_POST['submit_image']))
 
   if (move_uploaded_file($_FILES['myimage']['tmp_name'], $target_path)) {
 
-    $db = new PDO('mysql:host=localhost;port=3306;dbname=camagru', 'root', 'pass');
-    $db->setAttribute(PDO::ERRMODE_EXCEPTION);
+  //  $db = new PDO('mysql:host=localhost;port=3306;dbname=camagru', 'root', 'pass');
+    //$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    $sql = $db->prepare('INSERT INTO upload(path) VALUES(?)');
-    if ($sql->execute(array($target_path)) == TRUE) {
+  //  $sql = $db->prepare('INSERT INTO upload(path) VALUES(?)');
+//    if ($sql->execute(array($target_path)) == TRUE) {
       $_SESSION['path_img'] = $target_path;
       echo $target_path;
       echo "<br><img src=".$target_path." height=200 width=300 /><br>";
-    }
-    else {
-      echo "Error:".$sql.$db->error;
+  //  }
+  //  else {
+  //    echo "Error:".$sql.$db->error;
   # code...
 }
 
   }
-}
 ?>
 <br>
 <br>
@@ -88,7 +86,12 @@ if (isset($_POST['submit_image']))
     }
   </script>
 <?php
+
+  $dir = "save/";
   if ($_POST['submit_filter'] && $_POST['submit_filter'] == "Montage") {
+
+    $db = new PDO('mysql:host=localhost;port=3306;dbname=camagru', 'root', 'pass');
+    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     if ($_POST['type_filter'] && !empty($_POST['type_filter'])) {
 
@@ -103,7 +106,7 @@ if (isset($_POST['submit_image']))
       }
       $dest = imagecreatefromjpeg($_SESSION['path_img']);
 
-      echo "Image load : ".$_SESSION['path_img'];
+//      echo "Image load : ".$_SESSION['path_img'];
       $l_s = imagesx($src);
       $h_s = imagesy($src);
       $l_d = imagesx($dest);
@@ -120,12 +123,42 @@ if (isset($_POST['submit_image']))
       $destination_y =  $h_d - $h_s;
     //  imagecopy($dest, $src, $destination_x, $destination_y, 0, 0, $l_s, $h_s);
       imagecopy($dest, $src, 0, 0, 0, 0, $l_s, $h_s);
-      imagejpeg($dest,"images/test1.jpg");
-      $target = "images/test1.jpg";
-      echo "<br><img src=".$target." height=439px width=550px /><br>";
-    }
+      $path_img = $dir . mktime() . ".jpg";
+      echo $path_img;
+      imagejpeg($dest, $path_img);
+      $target = $path_img;
+
+      $sql = $db->prepare('INSERT INTO image(PATH_IMG, ID_USER) VALUES(?, ?)');
+        if ($sql->execute(array($target, $_SESSION['id'])) == TRUE) {
+          echo "<br><img src=".$target." height=439px width=550px /><br>";
+        }
+        else {
+          echo "error";
+        }
+  }
   }
   else {
     echo "error montage !";
   }
  ?>
+</main>
+<div class="side">
+<?php
+$db = new PDO('mysql:host=localhost;port=3306;dbname=camagru', 'root', 'pass');
+$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+$sql = $db->prepare('SELECT PATH_IMG FROM image WHERE ID_USER = ? ORDER BY DATE_IMG DESC');
+$sql->execute(array($_SESSION['id']));
+while ($result = $sql->fetch()) {
+    echo "<br><img id='img_save' src=".$result['PATH_IMG']." height=228px width=404px /><br>";
+}
+?>
+
+
+</div>
+<footer>
+
+</footer>
+
+</body>
+</html>

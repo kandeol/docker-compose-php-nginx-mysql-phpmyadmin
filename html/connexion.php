@@ -16,7 +16,7 @@ if (isset($_POST['submit']) && $_POST['submit'] == "Valider")
         die('Erreur : ' . $e->getMessage());
     }
 
-    $verify_connexion = $db->prepare('SELECT id, user, pwd, email FROM login WHERE user = :user');
+    $verify_connexion = $db->prepare('SELECT id_user, user, pwd, email FROM login WHERE user = :user');
     $verify_connexion->execute(array(':user' => $_POST['user']));
     $result = $verify_connexion->fetch();
 
@@ -32,7 +32,7 @@ if (isset($_POST['submit']) && $_POST['submit'] == "Valider")
       if ($pwd_hash == $result['pwd'])
       {
         session_start();
-        $_SESSION['id'] = $result['id'];
+        $_SESSION['id'] = $result['id_user'];
         $_SESSION['user'] = $result['user'];
         $_SESSION['email'] = $result['email'];
         header('location: membre.php');

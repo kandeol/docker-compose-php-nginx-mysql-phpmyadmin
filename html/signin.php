@@ -31,7 +31,7 @@ if (isset($_POST['submit']) && $_POST['submit'] == "Valider")
     $verify_user = $db->prepare('SELECT count(*) FROM login WHERE user = ?');
     $verify_email = $db->prepare('SELECT count(*) FROM login WHERE email = ?');
     $sql = $db->prepare('INSERT INTO login(user,pwd,email,confirmkey,confirme) VALUES(?, ?, ?, ?, ?)');
-    $verify = $db->prepare('SELECT count(*) FROM login WHERE user= ? AND pwd= ? AND email= ? AND confirmkey= ?');
+    $verify = $db->prepare('SELECT * FROM login WHERE user= ? AND pwd= ? AND email= ? AND confirmkey= ?');
 
 
 
@@ -64,7 +64,7 @@ echo $_POST['user'];
 
       $data = $verify->fetch();
 
-      if ($data[0] == 1)
+      if ($verify->rowCount() == 1)
       {
         $header="MIME-Version: 1.0\r\n";
         $header.='From:"PrimFX.com"<support@primfx.com>'."\n";
@@ -81,6 +81,7 @@ echo $_POST['user'];
                      ';
         mail($_POST['email'], "Confirmation de compte", $message, $header);
         session_start();
+        $_SESSION['id'] = $data['id_user'];
         $_SESSION['user'] = $_POST['user'];
         $_SESSION['email'] = $_POST['email'];
 
