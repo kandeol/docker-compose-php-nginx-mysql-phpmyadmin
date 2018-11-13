@@ -16,10 +16,29 @@ if (isset($_GET['id_img']) && !empty($_GET['id_img'])) {
   $likes = $db->prepare('SELECT ID_LIKES FROM T_LIKES WHERE ID_IMG = ?');
   $likes->execute(array($get_id_img));
   $likes = $likes->rowCount();
+
+
+
+  if (isset($_POST['submit_comment'])) {
+    if (isset($_POST['comment']) && !empty($_POST['comment'])) {
+      $comment = htmlspecialchars($_POST['comment']);
+
+      $ins = $db->prepare('INSERT INTO T_COM (ID_USER, TEXT_COM, ID_IMG) VALUES(?, ?, ?)');
+      $ins->execute(array($_SESSION['id'], $_POST['comment'], $get_id_img));
+      $c_msg = "<span style='color:green'>Votre commentaire a bien ete ajoute</span>";
+    }
+    else {
+      $c_msg = "Erreur : Tous les champs doivent etre completes";
+    }
+    # code...
+  }
 }
 else {
   header('location: gallery.php?page=1');
 }
+
+$comments = $db->prepare('SELECT * FROM T_COM WHERE ID_IMG = ? ORDER BY ID_COM DESC');
+$comments->execute(array($get_id_img));
 
 ?>
 
@@ -52,7 +71,19 @@ else {
    ?>
    <br><br>
    <a href="php/action.php?id=<?= $id?>&page=<?= $get_p_page?>">J'aime</a> (<?= $likes ?>)
-
+   <br><br>
+   <h2>Commentaires</h2>
+   <form method="post">
+     <textarea name="comment" placeholder="Votre commentaire..."></textarea><br>
+     <input type="submit" value="poster votre commetaire" name="submit_comment"/>
+   </form>
+   <?php if (isset($c_msg)) { echo $c_msg; } ?>
+   <br>
+   <div id="con_com">
+   <?php  while($c = $comments->fetch()) {
+      echo "<div class='div_com'>".$_SESSION['user']." : ".$c['TEXT_COM']."</div><br>";
+   }?>
+   </div>
 </main>
 </body>
 </html>

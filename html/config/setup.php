@@ -43,6 +43,17 @@ function setup($db, $db_name)
     FOREIGN KEY (ID_USER) REFERENCES login(id_user)
   )";
   $result = $db->exec($sql);
+
+  $sql = "CREATE TABLE T_COM (
+    ID_COM int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    ID_USER int(11) NOT NULL,
+    TEXT_COM text NOT NULL,
+    ID_IMG int(11) NOT NULL,
+    DATE_COM DATETIME DEFAULT NOW(),
+    FOREIGN KEY (ID_IMG) REFERENCES image(ID_IMG),
+    FOREIGN KEY (ID_USER) REFERENCES login(id_user)
+  )";
+  $result = $db->exec($sql);
 }
 
 $dsn = "mysql:host=".$DB_HOST;

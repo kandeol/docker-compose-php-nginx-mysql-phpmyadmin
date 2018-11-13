@@ -40,6 +40,14 @@ $depart = ($pageCourante-1)*$imagesParPage;
   <header>
     <h1 class="title"> CAMAGRU </h1>
   </header>
+  <div id="bar_nav">
+    <ul>
+      <li><a class="active" href="#home">Home</a></li>
+      <li><a href="#news">News</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="#about">About</a></li>
+    </ul>
+  </div>
 <!-- Menu de navigation du site -->
 <main id="main_gallery">
   <h2>Gallery</h2>
@@ -54,7 +62,7 @@ $depart = ($pageCourante-1)*$imagesParPage;
     $likes = $likes->rowCount();
 
       echo "<div id='div_gallery'><a href='review.php?id_img=".$result['ID_IMG']."&page=".$pageCourante."' ><img id='img_save' src=".$result['PATH_IMG']." height=228px width=404px /></a><br>  ";
-      echo "<a href='php/action.php?id=".$result['ID_IMG']."&page=".$pageCourante."'>J'aime</a> (".$likes.")</div>";
+      echo "<a class='like_gal' href='php/action.php?id=".$result['ID_IMG']."&page=".$pageCourante."'>J'aime</a> (".$likes.")</div>";
 
   }
    ?>

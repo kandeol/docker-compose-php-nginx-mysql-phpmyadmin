@@ -21,7 +21,7 @@ if (isset($_SESSION['user']))
   </header>
 <!-- Menu de navigation du site -->
 <main>
-  <h2>CONNEXION</h2>
+  <h2 id="title_connexion">CONNEXION</h2>
   <form action="connexion.php" method="post">
     nom d'utilisateur :<br>
     <input type="text" name="user"><br>
@@ -29,7 +29,8 @@ if (isset($_SESSION['user']))
     <input type="text" name="pwd"><br>
     <input type="submit" name="submit" value="Valider">
   </form>
-  <a href="inscription.php">Pas encore inscrit ?</a>
+  <br>
+  <a id="go_signin" href="inscription.php">Pas encore inscrit ?</a>
 </main>
 </body>
 </html>
