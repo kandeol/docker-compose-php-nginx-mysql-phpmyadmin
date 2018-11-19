@@ -147,10 +147,11 @@ if (isset($_POST['submit_image']))
 $db = new PDO('mysql:host=localhost;port=3306;dbname=camagru', 'root', 'pass');
 $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-$sql = $db->prepare('SELECT PATH_IMG FROM image WHERE ID_USER = ? ORDER BY DATE_IMG DESC');
+$sql = $db->prepare('SELECT ID_IMG, PATH_IMG FROM image WHERE ID_USER = ? ORDER BY DATE_IMG DESC');
 $sql->execute(array($_SESSION['id']));
 while ($result = $sql->fetch()) {
     echo "<br><img id='img_save' src=".$result['PATH_IMG']." height=228px width=404px /><br>";
+    echo "<div><a href='delete_image.php?id_i=".$result['ID_IMG']."' class='del_img'>Supprimer</a></div>";
 }
 ?>
 

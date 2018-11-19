@@ -1,3 +1,4 @@
+
 <?php
 
 session_start();
@@ -29,7 +30,7 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
       }
       $path_p_page = basename($_SERVER['HTTP_REFERER']);
       if (preg_match("/review/", $path_p_page)) {
-            header('location: ../review.php?id_img='.$getid.'&page='.$get_page);
+        header('location: ../review.php?id_img='.$getid.'&page='.$get_page);
       }
       elseif (preg_match("/gallery/", $path_p_page)){
             header('location: ../gallery.php?page='.$get_page);
