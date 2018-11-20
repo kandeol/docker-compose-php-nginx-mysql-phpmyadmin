@@ -11,7 +11,7 @@ if (isset($_POST['submit_modif']) && $_POST['submit_modif'] == "valider")
       {
         try
         {
-          $db = new PDO('mysql:host=localhost;port=3306;dbname=camagru', 'root', 'pass');
+          $db = new PDO('mysql:host=mysql;port=3306;dbname=camagru', 'root', 'pass');
         }
         catch (\Exception $e)
         {
@@ -48,7 +48,7 @@ if (isset($_POST['submit_modif']) && $_POST['submit_modif'] == "valider")
 
       try
       {
-        try
+  /*      try
         {
           $db = new PDO('mysql:host=localhost;port=3306;dbname=camagru', 'root', 'pass');
         }
@@ -57,7 +57,7 @@ if (isset($_POST['submit_modif']) && $_POST['submit_modif'] == "valider")
             die('Erreur : ' . $e->getMessage());
         }
         $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
+*/
         $sql = $db->prepare('UPDATE login SET email= ? WHERE id= ?');
         $sql->execute(array($_POST['new_email'], $_SESSION['id']));
         $sql->closeCursor();

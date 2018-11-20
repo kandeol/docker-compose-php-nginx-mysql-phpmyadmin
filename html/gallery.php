@@ -1,15 +1,10 @@
 <?php
 session_start();
 
-if (!isset($_SESSION['user']))
-{
-  header('location: index.php');
-}
-
-$db = new PDO('mysql:host=localhost;port=3306;dbname=camagru', 'root', 'pass');
+$db = new PDO('mysql:host=mysql;port=3306;dbname=camagru', 'root', 'pass');
 $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-$imagesParPage = 3;
+$imagesParPage = 6;
 $imagesTotalesReq = $db->prepare('SELECT ID_IMG FROM image');
 $imagesTotalesReq->execute();
 $imagesTotales = $imagesTotalesReq->rowCount();
@@ -42,16 +37,23 @@ $depart = ($pageCourante-1)*$imagesParPage;
   </header>
   <div id="bar_nav">
     <ul>
-      <li><a class="active" href="#home">Home</a></li>
-      <li><a href="#news">News</a></li>
-      <li><a href="#contact">Contact</a></li>
-      <li><a href="#about">About</a></li>
+    <!--  <li><a class="active" href="#home">Home</a></li> -->
+      <li><a href="membre.php">Montage</a></li>
+      <li><a href="gallery.php">Gallery</a></li>
+      <?php
+      if ($_SESSION['user']) {
+        echo "<li><a href='deconnexion.php'>Deconnexion</a></li>";
+      }
+      else {
+        echo "<li><a href='index.php'>Connexion</a></li>";
+      }
+       ?>
     </ul>
   </div>
 <!-- Menu de navigation du site -->
 <main id="main_gallery">
   <h2>Gallery</h2>
-  <div><a href="membre.php">Retour a l'espace membre</a></div> <br> <br>
+  <br><br><br>
   <?php
   $images = $db->prepare('SELECT * FROM image ORDER BY DATE_IMG LIMIT '.$depart.','.$imagesParPage);
   $images->execute();
@@ -61,9 +63,13 @@ $depart = ($pageCourante-1)*$imagesParPage;
     $likes->execute(array($result['ID_IMG']));
     $likes = $likes->rowCount();
 
-      echo "<div id='div_gallery'><a href='review.php?id_img=".$result['ID_IMG']."&page=".$pageCourante."' ><img id='img_save' src=".$result['PATH_IMG']." height=228px width=404px /></a><br>  ";
-      echo "<a class='like_gal' href='php/action.php?id=".$result['ID_IMG']."&page=".$pageCourante."'>J'aime</a> (".$likes.")</div>";
-
+      echo "<div id='div_gallery'><a href='review.php?id_img=".$result['ID_IMG']."&page=".$pageCourante."' ><img id='img_save' src=".$result['PATH_IMG']." height=240px width=320px /></a><br>  ";
+      if ($_SESSION['user']) {
+       echo "<a class='like_gal' href='php/action.php?id=".$result['ID_IMG']."&page=".$pageCourante."'>J'aime</a> (".$likes.")</div>";
+      }
+      else {
+        echo "<a class='like_gal'>J'aime</a> (".$likes.")</div>";
+      }
   }
    ?>
    <br><br>

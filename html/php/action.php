@@ -2,7 +2,7 @@
 
 session_start();
 
-$db = new PDO('mysql:host=localhost;port=3306;dbname=camagru', 'root', 'pass');
+$db = new PDO('mysql:host=mysql;port=3306;dbname=camagru', 'root', 'pass');
 $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 $getid = (int) $_GET['id'];
