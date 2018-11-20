@@ -17,6 +17,7 @@ session_start();
 
 <body>
   <header>
+<<<<<<< HEAD
     <h1 class="title"> CAMAGRU </h1>
   </header>
   <!-- Menu de navigation du site -->
@@ -34,6 +35,11 @@ session_start();
        ?>
     </ul>
   </div>
+=======
+    <h1> CAMAGRU </h1>
+  </header>
+  <!-- Menu de navigation du site -->
+>>>>>>> 16e81931029e301df0598731d0b8110a48a78ab8
   <main>
     <h2>INSCRIPTION</h2>
     <form method="post" action="signin.php">
