@@ -221,11 +221,7 @@ $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 $sql = $db->prepare('SELECT ID_IMG, PATH_IMG FROM image WHERE ID_USER = ? ORDER BY DATE_IMG DESC');
 $sql->execute(array($_SESSION['id']));
 while ($result = $sql->fetch()) {
-<<<<<<< HEAD
     echo "<br><img id='img_save' src=".$result['PATH_IMG']." height=240px width=320px /><br>";
-=======
-    echo "<br><img id='img_save' src=".$result['PATH_IMG']." height=228px width=404px /><br>";
->>>>>>> 16e81931029e301df0598731d0b8110a48a78ab8
     echo "<div><a href='delete_image.php?id_i=".$result['ID_IMG']."' class='del_img'>Supprimer</a></div>";
 }
 ?>

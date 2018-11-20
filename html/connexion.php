@@ -6,11 +6,7 @@ if (isset($_POST['submit']) && $_POST['submit'] == "Valider") {
 
     if ($isset && $empty) {
         try {
-<<<<<<< HEAD
             $db = new PDO('mysql:host=mysql;port=3306;dbname=camagru', 'root', 'pass');
-=======
-            $db = new PDO('mysql:host=localhost;port=3306;dbname=camagru', 'root', 'pass');
->>>>>>> 16e81931029e301df0598731d0b8110a48a78ab8
         } catch (\Exception $e) {
             die('Erreur : ' . $e->getMessage());
         }
